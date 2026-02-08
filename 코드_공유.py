@@ -35,6 +35,45 @@ X_train, X_test, y_train, y_test = train_test_split(
 ''' 코드 작성 바랍니다 '''
 
 
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+dt_model = DecisionTreeClassifier(random_state=42)
+
+param_grid_dt = {
+    "criterion": ["gini", "entropy"],
+    "max_depth": [2, 5],
+    "min_samples_split": [2, 10],
+    "min_samples_leaf": [1, 2, 4]
+}
+
+grid_dt = GridSearchCV(
+    dt_model,
+    param_grid_dt,
+    cv=5,
+    scoring="accuracy",
+    n_jobs=-1
+)
+
+grid_dt.fit(X_train, y_train)
+best_dt = grid_dt.best_estimator_
+
+dt_pred = best_dt.predict(X_test)
+dt_acc = accuracy_score(y_test, dt_pred)
+
+print("Best Hyper-parameter:", grid_dt.best_params_)
+print("Best Score:", grid_dt.best_score_)
+
+plt.figure(figsize=(16, 8))
+plt.bar(X.columns, best_dt.feature_importances_)
+plt.xticks(rotation=45, ha="right")
+plt.title("Feature Importance")
+plt.xlabel("Feature")
+plt.ylabel("Importance")
+plt.tight_layout()
+plt.show()
+
+
 ####### B 작업자 작업 수행 #######
 
 ''' 코드 작성 바랍니다 '''
