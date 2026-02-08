@@ -34,7 +34,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 ''' 코드 작성 바랍니다 '''
 
-
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
